@@ -1,0 +1,81 @@
+
+generator client {
+
+  provider = "prisma-client"
+
+ 
+  output = "../src/generated/prisma"
+}
+
+datasource db {
+
+  provider = "postgresql"
+}
+
+enum StatusProduto {
+  ATIVO
+  INATIVO
+}
+
+enum StatusCarga {
+  REGISTRADA
+  EM_ANALISE
+  EM_INSPECAO
+  LIBERADA
+  BLOQUEADA
+  EM_MOVIMENTACAO
+  FINALIZADA
+  CANCELADA
+}
+
+model ProdutoQuimico {
+
+  id                   String        @id @default(uuid())
+
+  nome                 String
+  descricao            String
+  codigoOnu            String
+  classeRisco          String
+  grupoCompatibilidade String
+
+  status               StatusProduto @default(ATIVO)
+
+  cargas               CargaQuimica[]
+
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  // Nome da tabela no PostgreSQL.
+  @@map("produtos_quimicos")
+}
+
+model CargaQuimica {
+
+  id                 String      @id @default(uuid())
+
+  codigoCarga        String      @unique
+
+  // Chave estrangeira
+  produtoId          String
+  produto            ProdutoQuimico @relation(fields: [produtoId], references: [id])
+  
+
+  quantidade         Decimal
+  unidade            String
+  origem             String
+  destino            String
+  responsavelTecnico String
+
+
+  temDocumentacao    Boolean     @default(false)
+
+
+  status             StatusCarga @default(REGISTRADA)
+
+  dataEntrada        DateTime
+
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  @@map("cargas_quimicas")
+}
