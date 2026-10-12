@@ -1,17 +1,14 @@
-import express from "express";
+import "dotenv/config";
+import app from "./app.js";
 
-const app = express();
+const PORT = Number(process.env.PORT) || 3000;
 
-const PORT = 3000;
-
-app.use(express.json());
-
-app.get("/", (req, res) => {
-  res.json({
-    message: "QuimiPort API funcionando!"
-  });
+const server = app.listen(PORT, () => {
+  console.log(`QuimiPort API disponível em http://localhost:${PORT}`);
 });
 
-app.listen(PORT, () => {
-  console.log(`Servidor rodando em http://localhost:${PORT}`);
+// Trata falhas inesperadas do servidor HTTP.
+server.on("error", (error) => {
+  console.error("Erro ao iniciar o servidor:", error);
+  process.exitCode = 1;
 });
