@@ -20,12 +20,22 @@ export type ProdutoQuimicoModel = runtime.Types.Result.DefaultSelection<Prisma.$
 
 export type AggregateProdutoQuimico = {
   _count: ProdutoQuimicoCountAggregateOutputType | null
+  _avg: ProdutoQuimicoAvgAggregateOutputType | null
+  _sum: ProdutoQuimicoSumAggregateOutputType | null
   _min: ProdutoQuimicoMinAggregateOutputType | null
   _max: ProdutoQuimicoMaxAggregateOutputType | null
 }
 
+export type ProdutoQuimicoAvgAggregateOutputType = {
+  id: number | null
+}
+
+export type ProdutoQuimicoSumAggregateOutputType = {
+  id: number | null
+}
+
 export type ProdutoQuimicoMinAggregateOutputType = {
-  id: string | null
+  id: number | null
   nome: string | null
   descricao: string | null
   codigoOnu: string | null
@@ -37,7 +47,7 @@ export type ProdutoQuimicoMinAggregateOutputType = {
 }
 
 export type ProdutoQuimicoMaxAggregateOutputType = {
-  id: string | null
+  id: number | null
   nome: string | null
   descricao: string | null
   codigoOnu: string | null
@@ -61,6 +71,14 @@ export type ProdutoQuimicoCountAggregateOutputType = {
   _all: number
 }
 
+
+export type ProdutoQuimicoAvgAggregateInputType = {
+  id?: true
+}
+
+export type ProdutoQuimicoSumAggregateInputType = {
+  id?: true
+}
 
 export type ProdutoQuimicoMinAggregateInputType = {
   id?: true
@@ -137,6 +155,18 @@ export type ProdutoQuimicoAggregateArgs<ExtArgs extends runtime.Types.Extensions
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: ProdutoQuimicoAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: ProdutoQuimicoSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProdutoQuimicoMinAggregateInputType
@@ -167,12 +197,14 @@ export type ProdutoQuimicoGroupByArgs<ExtArgs extends runtime.Types.Extensions.I
   take?: number
   skip?: number
   _count?: ProdutoQuimicoCountAggregateInputType | true
+  _avg?: ProdutoQuimicoAvgAggregateInputType
+  _sum?: ProdutoQuimicoSumAggregateInputType
   _min?: ProdutoQuimicoMinAggregateInputType
   _max?: ProdutoQuimicoMaxAggregateInputType
 }
 
 export type ProdutoQuimicoGroupByOutputType = {
-  id: string
+  id: number
   nome: string
   descricao: string
   codigoOnu: string
@@ -182,6 +214,8 @@ export type ProdutoQuimicoGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   _count: ProdutoQuimicoCountAggregateOutputType | null
+  _avg: ProdutoQuimicoAvgAggregateOutputType | null
+  _sum: ProdutoQuimicoSumAggregateOutputType | null
   _min: ProdutoQuimicoMinAggregateOutputType | null
   _max: ProdutoQuimicoMaxAggregateOutputType | null
 }
@@ -205,7 +239,7 @@ export type ProdutoQuimicoWhereInput = {
   AND?: Prisma.ProdutoQuimicoWhereInput | Prisma.ProdutoQuimicoWhereInput[]
   OR?: Prisma.ProdutoQuimicoWhereInput[]
   NOT?: Prisma.ProdutoQuimicoWhereInput | Prisma.ProdutoQuimicoWhereInput[]
-  id?: Prisma.StringFilter<"ProdutoQuimico"> | string
+  id?: Prisma.IntFilter<"ProdutoQuimico"> | number
   nome?: Prisma.StringFilter<"ProdutoQuimico"> | string
   descricao?: Prisma.StringFilter<"ProdutoQuimico"> | string
   codigoOnu?: Prisma.StringFilter<"ProdutoQuimico"> | string
@@ -231,7 +265,7 @@ export type ProdutoQuimicoOrderByWithRelationInput = {
 }
 
 export type ProdutoQuimicoWhereUniqueInput = Prisma.AtLeast<{
-  id?: string
+  id?: number
   AND?: Prisma.ProdutoQuimicoWhereInput | Prisma.ProdutoQuimicoWhereInput[]
   OR?: Prisma.ProdutoQuimicoWhereInput[]
   NOT?: Prisma.ProdutoQuimicoWhereInput | Prisma.ProdutoQuimicoWhereInput[]
@@ -257,15 +291,17 @@ export type ProdutoQuimicoOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ProdutoQuimicoCountOrderByAggregateInput
+  _avg?: Prisma.ProdutoQuimicoAvgOrderByAggregateInput
   _max?: Prisma.ProdutoQuimicoMaxOrderByAggregateInput
   _min?: Prisma.ProdutoQuimicoMinOrderByAggregateInput
+  _sum?: Prisma.ProdutoQuimicoSumOrderByAggregateInput
 }
 
 export type ProdutoQuimicoScalarWhereWithAggregatesInput = {
   AND?: Prisma.ProdutoQuimicoScalarWhereWithAggregatesInput | Prisma.ProdutoQuimicoScalarWhereWithAggregatesInput[]
   OR?: Prisma.ProdutoQuimicoScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProdutoQuimicoScalarWhereWithAggregatesInput | Prisma.ProdutoQuimicoScalarWhereWithAggregatesInput[]
-  id?: Prisma.StringWithAggregatesFilter<"ProdutoQuimico"> | string
+  id?: Prisma.IntWithAggregatesFilter<"ProdutoQuimico"> | number
   nome?: Prisma.StringWithAggregatesFilter<"ProdutoQuimico"> | string
   descricao?: Prisma.StringWithAggregatesFilter<"ProdutoQuimico"> | string
   codigoOnu?: Prisma.StringWithAggregatesFilter<"ProdutoQuimico"> | string
@@ -277,7 +313,6 @@ export type ProdutoQuimicoScalarWhereWithAggregatesInput = {
 }
 
 export type ProdutoQuimicoCreateInput = {
-  id?: string
   nome: string
   descricao: string
   codigoOnu: string
@@ -290,7 +325,7 @@ export type ProdutoQuimicoCreateInput = {
 }
 
 export type ProdutoQuimicoUncheckedCreateInput = {
-  id?: string
+  id?: number
   nome: string
   descricao: string
   codigoOnu: string
@@ -303,7 +338,6 @@ export type ProdutoQuimicoUncheckedCreateInput = {
 }
 
 export type ProdutoQuimicoUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   descricao?: Prisma.StringFieldUpdateOperationsInput | string
   codigoOnu?: Prisma.StringFieldUpdateOperationsInput | string
@@ -316,7 +350,7 @@ export type ProdutoQuimicoUpdateInput = {
 }
 
 export type ProdutoQuimicoUncheckedUpdateInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   descricao?: Prisma.StringFieldUpdateOperationsInput | string
   codigoOnu?: Prisma.StringFieldUpdateOperationsInput | string
@@ -329,7 +363,7 @@ export type ProdutoQuimicoUncheckedUpdateInput = {
 }
 
 export type ProdutoQuimicoCreateManyInput = {
-  id?: string
+  id?: number
   nome: string
   descricao: string
   codigoOnu: string
@@ -341,7 +375,6 @@ export type ProdutoQuimicoCreateManyInput = {
 }
 
 export type ProdutoQuimicoUpdateManyMutationInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   descricao?: Prisma.StringFieldUpdateOperationsInput | string
   codigoOnu?: Prisma.StringFieldUpdateOperationsInput | string
@@ -353,7 +386,7 @@ export type ProdutoQuimicoUpdateManyMutationInput = {
 }
 
 export type ProdutoQuimicoUncheckedUpdateManyInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   descricao?: Prisma.StringFieldUpdateOperationsInput | string
   codigoOnu?: Prisma.StringFieldUpdateOperationsInput | string
@@ -374,6 +407,10 @@ export type ProdutoQuimicoCountOrderByAggregateInput = {
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ProdutoQuimicoAvgOrderByAggregateInput = {
+  id?: Prisma.SortOrder
 }
 
 export type ProdutoQuimicoMaxOrderByAggregateInput = {
@@ -400,6 +437,10 @@ export type ProdutoQuimicoMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
+export type ProdutoQuimicoSumOrderByAggregateInput = {
+  id?: Prisma.SortOrder
+}
+
 export type ProdutoQuimicoScalarRelationFilter = {
   is?: Prisma.ProdutoQuimicoWhereInput
   isNot?: Prisma.ProdutoQuimicoWhereInput
@@ -417,6 +458,14 @@ export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
 }
 
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type ProdutoQuimicoCreateNestedOneWithoutCargasInput = {
   create?: Prisma.XOR<Prisma.ProdutoQuimicoCreateWithoutCargasInput, Prisma.ProdutoQuimicoUncheckedCreateWithoutCargasInput>
   connectOrCreate?: Prisma.ProdutoQuimicoCreateOrConnectWithoutCargasInput
@@ -432,7 +481,6 @@ export type ProdutoQuimicoUpdateOneRequiredWithoutCargasNestedInput = {
 }
 
 export type ProdutoQuimicoCreateWithoutCargasInput = {
-  id?: string
   nome: string
   descricao: string
   codigoOnu: string
@@ -444,7 +492,7 @@ export type ProdutoQuimicoCreateWithoutCargasInput = {
 }
 
 export type ProdutoQuimicoUncheckedCreateWithoutCargasInput = {
-  id?: string
+  id?: number
   nome: string
   descricao: string
   codigoOnu: string
@@ -472,7 +520,6 @@ export type ProdutoQuimicoUpdateToOneWithWhereWithoutCargasInput = {
 }
 
 export type ProdutoQuimicoUpdateWithoutCargasInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   descricao?: Prisma.StringFieldUpdateOperationsInput | string
   codigoOnu?: Prisma.StringFieldUpdateOperationsInput | string
@@ -484,7 +531,7 @@ export type ProdutoQuimicoUpdateWithoutCargasInput = {
 }
 
 export type ProdutoQuimicoUncheckedUpdateWithoutCargasInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
+  id?: Prisma.IntFieldUpdateOperationsInput | number
   nome?: Prisma.StringFieldUpdateOperationsInput | string
   descricao?: Prisma.StringFieldUpdateOperationsInput | string
   codigoOnu?: Prisma.StringFieldUpdateOperationsInput | string
@@ -590,7 +637,7 @@ export type $ProdutoQuimicoPayload<ExtArgs extends runtime.Types.Extensions.Inte
     cargas: Prisma.$CargaQuimicaPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: string
+    id: number
     nome: string
     descricao: string
     codigoOnu: string
@@ -1023,7 +1070,7 @@ export interface Prisma__ProdutoQuimicoClient<T, Null = never, ExtArgs extends r
  * Fields of the ProdutoQuimico model
  */
 export interface ProdutoQuimicoFieldRefs {
-  readonly id: Prisma.FieldRef<"ProdutoQuimico", 'String'>
+  readonly id: Prisma.FieldRef<"ProdutoQuimico", 'Int'>
   readonly nome: Prisma.FieldRef<"ProdutoQuimico", 'String'>
   readonly descricao: Prisma.FieldRef<"ProdutoQuimico", 'String'>
   readonly codigoOnu: Prisma.FieldRef<"ProdutoQuimico", 'String'>

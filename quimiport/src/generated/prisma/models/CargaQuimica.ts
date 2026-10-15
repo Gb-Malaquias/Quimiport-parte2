@@ -27,17 +27,19 @@ export type AggregateCargaQuimica = {
 }
 
 export type CargaQuimicaAvgAggregateOutputType = {
+  produtoId: number | null
   quantidade: runtime.Decimal | null
 }
 
 export type CargaQuimicaSumAggregateOutputType = {
+  produtoId: number | null
   quantidade: runtime.Decimal | null
 }
 
 export type CargaQuimicaMinAggregateOutputType = {
   id: string | null
   codigoCarga: string | null
-  produtoId: string | null
+  produtoId: number | null
   quantidade: runtime.Decimal | null
   unidade: string | null
   origem: string | null
@@ -53,7 +55,7 @@ export type CargaQuimicaMinAggregateOutputType = {
 export type CargaQuimicaMaxAggregateOutputType = {
   id: string | null
   codigoCarga: string | null
-  produtoId: string | null
+  produtoId: number | null
   quantidade: runtime.Decimal | null
   unidade: string | null
   origem: string | null
@@ -85,10 +87,12 @@ export type CargaQuimicaCountAggregateOutputType = {
 
 
 export type CargaQuimicaAvgAggregateInputType = {
+  produtoId?: true
   quantidade?: true
 }
 
 export type CargaQuimicaSumAggregateInputType = {
+  produtoId?: true
   quantidade?: true
 }
 
@@ -230,7 +234,7 @@ export type CargaQuimicaGroupByArgs<ExtArgs extends runtime.Types.Extensions.Int
 export type CargaQuimicaGroupByOutputType = {
   id: string
   codigoCarga: string
-  produtoId: string
+  produtoId: number
   quantidade: runtime.Decimal
   unidade: string
   origem: string
@@ -269,7 +273,7 @@ export type CargaQuimicaWhereInput = {
   NOT?: Prisma.CargaQuimicaWhereInput | Prisma.CargaQuimicaWhereInput[]
   id?: Prisma.StringFilter<"CargaQuimica"> | string
   codigoCarga?: Prisma.StringFilter<"CargaQuimica"> | string
-  produtoId?: Prisma.StringFilter<"CargaQuimica"> | string
+  produtoId?: Prisma.IntFilter<"CargaQuimica"> | number
   quantidade?: Prisma.DecimalFilter<"CargaQuimica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unidade?: Prisma.StringFilter<"CargaQuimica"> | string
   origem?: Prisma.StringFilter<"CargaQuimica"> | string
@@ -306,7 +310,7 @@ export type CargaQuimicaWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.CargaQuimicaWhereInput | Prisma.CargaQuimicaWhereInput[]
   OR?: Prisma.CargaQuimicaWhereInput[]
   NOT?: Prisma.CargaQuimicaWhereInput | Prisma.CargaQuimicaWhereInput[]
-  produtoId?: Prisma.StringFilter<"CargaQuimica"> | string
+  produtoId?: Prisma.IntFilter<"CargaQuimica"> | number
   quantidade?: Prisma.DecimalFilter<"CargaQuimica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unidade?: Prisma.StringFilter<"CargaQuimica"> | string
   origem?: Prisma.StringFilter<"CargaQuimica"> | string
@@ -347,7 +351,7 @@ export type CargaQuimicaScalarWhereWithAggregatesInput = {
   NOT?: Prisma.CargaQuimicaScalarWhereWithAggregatesInput | Prisma.CargaQuimicaScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"CargaQuimica"> | string
   codigoCarga?: Prisma.StringWithAggregatesFilter<"CargaQuimica"> | string
-  produtoId?: Prisma.StringWithAggregatesFilter<"CargaQuimica"> | string
+  produtoId?: Prisma.IntWithAggregatesFilter<"CargaQuimica"> | number
   quantidade?: Prisma.DecimalWithAggregatesFilter<"CargaQuimica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unidade?: Prisma.StringWithAggregatesFilter<"CargaQuimica"> | string
   origem?: Prisma.StringWithAggregatesFilter<"CargaQuimica"> | string
@@ -379,7 +383,7 @@ export type CargaQuimicaCreateInput = {
 export type CargaQuimicaUncheckedCreateInput = {
   id?: string
   codigoCarga: string
-  produtoId: string
+  produtoId: number
   quantidade: runtime.Decimal | runtime.DecimalJsLike | number | string
   unidade: string
   origem: string
@@ -411,7 +415,7 @@ export type CargaQuimicaUpdateInput = {
 export type CargaQuimicaUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   codigoCarga?: Prisma.StringFieldUpdateOperationsInput | string
-  produtoId?: Prisma.StringFieldUpdateOperationsInput | string
+  produtoId?: Prisma.IntFieldUpdateOperationsInput | number
   quantidade?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unidade?: Prisma.StringFieldUpdateOperationsInput | string
   origem?: Prisma.StringFieldUpdateOperationsInput | string
@@ -427,7 +431,7 @@ export type CargaQuimicaUncheckedUpdateInput = {
 export type CargaQuimicaCreateManyInput = {
   id?: string
   codigoCarga: string
-  produtoId: string
+  produtoId: number
   quantidade: runtime.Decimal | runtime.DecimalJsLike | number | string
   unidade: string
   origem: string
@@ -458,7 +462,7 @@ export type CargaQuimicaUpdateManyMutationInput = {
 export type CargaQuimicaUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   codigoCarga?: Prisma.StringFieldUpdateOperationsInput | string
-  produtoId?: Prisma.StringFieldUpdateOperationsInput | string
+  produtoId?: Prisma.IntFieldUpdateOperationsInput | number
   quantidade?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   unidade?: Prisma.StringFieldUpdateOperationsInput | string
   origem?: Prisma.StringFieldUpdateOperationsInput | string
@@ -498,6 +502,7 @@ export type CargaQuimicaCountOrderByAggregateInput = {
 }
 
 export type CargaQuimicaAvgOrderByAggregateInput = {
+  produtoId?: Prisma.SortOrder
   quantidade?: Prisma.SortOrder
 }
 
@@ -534,6 +539,7 @@ export type CargaQuimicaMinOrderByAggregateInput = {
 }
 
 export type CargaQuimicaSumOrderByAggregateInput = {
+  produtoId?: Prisma.SortOrder
   quantidade?: Prisma.SortOrder
 }
 
@@ -657,7 +663,7 @@ export type CargaQuimicaScalarWhereInput = {
   NOT?: Prisma.CargaQuimicaScalarWhereInput | Prisma.CargaQuimicaScalarWhereInput[]
   id?: Prisma.StringFilter<"CargaQuimica"> | string
   codigoCarga?: Prisma.StringFilter<"CargaQuimica"> | string
-  produtoId?: Prisma.StringFilter<"CargaQuimica"> | string
+  produtoId?: Prisma.IntFilter<"CargaQuimica"> | number
   quantidade?: Prisma.DecimalFilter<"CargaQuimica"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   unidade?: Prisma.StringFilter<"CargaQuimica"> | string
   origem?: Prisma.StringFilter<"CargaQuimica"> | string
@@ -818,7 +824,7 @@ export type $CargaQuimicaPayload<ExtArgs extends runtime.Types.Extensions.Intern
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     codigoCarga: string
-    produtoId: string
+    produtoId: number
     quantidade: runtime.Decimal
     unidade: string
     origem: string
@@ -1255,7 +1261,7 @@ export interface Prisma__CargaQuimicaClient<T, Null = never, ExtArgs extends run
 export interface CargaQuimicaFieldRefs {
   readonly id: Prisma.FieldRef<"CargaQuimica", 'String'>
   readonly codigoCarga: Prisma.FieldRef<"CargaQuimica", 'String'>
-  readonly produtoId: Prisma.FieldRef<"CargaQuimica", 'String'>
+  readonly produtoId: Prisma.FieldRef<"CargaQuimica", 'Int'>
   readonly quantidade: Prisma.FieldRef<"CargaQuimica", 'Decimal'>
   readonly unidade: Prisma.FieldRef<"CargaQuimica", 'String'>
   readonly origem: Prisma.FieldRef<"CargaQuimica", 'String'>

@@ -26,7 +26,7 @@ class ProdutoController {
     next: NextFunction,
   ) {
     try {
-      const produto = await produtoService.buscarPorId(String(req.params.id));
+      const produto = await produtoService.buscarPorId(Number(req.params.id));
       return res.status(200).json(produto);
     } catch (error) {
       return next(error);
@@ -78,7 +78,7 @@ class ProdutoController {
       }
 
       const produto = await produtoService.atualizar(
-        String(req.params.id),
+        Number(req.params.id),
         validacao.data,
       );
 
@@ -94,7 +94,7 @@ class ProdutoController {
     next: NextFunction,
   ) {
     try {
-      const produto = await produtoService.inativar(String(req.params.id));
+      const produto = await produtoService.inativar(Number(req.params.id));
       return res.status(200).json(produto);
     } catch (error) {
       return next(error);

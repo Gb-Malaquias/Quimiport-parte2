@@ -10,7 +10,7 @@ class ProdutoRepository {
         });
     }
 
-    async buscarPorId(id: string){
+    async buscarPorId(id: number){
         return prisma.produtoQuimico.findUnique({
             where: {id},
         });
@@ -22,14 +22,14 @@ class ProdutoRepository {
         });
     }
 
-    async atualizar(id: string, produto: Prisma.ProdutoQuimicoUpdateInput){
+    async atualizar(id: number, produto: Prisma.ProdutoQuimicoUpdateInput){
         return prisma.produtoQuimico.update({
             where: {id},
             data: produto,
         });
     }
 
-    async inativar(id: string){
+    async inativar(id: number){
         return prisma.produtoQuimico.update({
             where: {id},
             data: {status: "INATIVO"},

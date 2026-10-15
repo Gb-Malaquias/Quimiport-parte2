@@ -30,7 +30,7 @@ enum StatusCarga {
 
 model ProdutoQuimico {
 
-  id                   String        @id @default(uuid())
+  id Int @id @default(autoincrement())
 
   nome                 String
   descricao            String
@@ -56,7 +56,7 @@ model CargaQuimica {
   codigoCarga        String      @unique
 
   // Chave estrangeira
-  produtoId          String
+  produtoId Int
   produto            ProdutoQuimico @relation(fields: [produtoId], references: [id])
   
 

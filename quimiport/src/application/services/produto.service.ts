@@ -10,7 +10,7 @@ class ProdutoService {
     return produtoRepository.listar();
   }
 
-  async buscarPorId(id: string) {
+  async buscarPorId(id: number) {
     const produto = await produtoRepository.buscarPorId(id);
 
     if (!produto) {
@@ -30,13 +30,13 @@ class ProdutoService {
     });
   }
 
-  async atualizar(id: string, dados: AtualizarProdutoInput) {
+  async atualizar(id: number, dados: AtualizarProdutoInput) {
     await this.buscarPorId(id);
 
     return produtoRepository.atualizar(id, dados);
   }
 
-  async inativar(id: string) {
+  async inativar(id: number) {
     await this.buscarPorId(id);
 
     return produtoRepository.inativar(id);
