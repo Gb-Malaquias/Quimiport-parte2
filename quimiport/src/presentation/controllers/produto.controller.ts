@@ -6,6 +6,24 @@ import {
   atualizarProdutoSchema,
 } from "../../application/validators/produto.schema.js";
 
+
+function parseProdutoId(value: unknown): number | null {
+  // Aceita somente uma string contendo um inteiro positivo.
+  if (typeof value !== "string" || !/^[1-9]\d*$/.test(value)) {
+    return null;
+  }
+
+  const id = Number(value);
+
+  // Evita números inteiros fora do limite seguro do JavaScript.
+  if (!Number.isSafeInteger(id)) {
+    return null;
+  }
+
+  return id;
+}
+
+
 class ProdutoController {
   async listar(
     _req: Request,
@@ -26,9 +44,19 @@ class ProdutoController {
     next: NextFunction,
   ) {
     try {
-      const produto = await produtoService.buscarPorId(Number(req.params.id));
+
+      const id = parseProdutoId(req.params.id);
+      if (id === null) {
+        return res.status(400).json({
+          mensagem: "O ID deve ser um número inteiro positivo.",
+        });
+      }
+
+      const produto = await produtoService.buscarPorId(id);
       return res.status(200).json(produto);
-    } catch (error) {
+    } 
+    
+    catch (error) {
       return next(error);
     }
   }
@@ -65,6 +93,13 @@ class ProdutoController {
     next: NextFunction,
   ) {
     try {
+
+      const id = parseProdutoId(req.params.id);
+        if (id === null) {
+          return res.status(400).json({
+            mensagem: "O ID deve ser um número inteiro positivo.",
+          });
+        }
       const validacao = atualizarProdutoSchema.safeParse(req.body);
 
       if (!validacao.success) {
@@ -78,7 +113,7 @@ class ProdutoController {
       }
 
       const produto = await produtoService.atualizar(
-        Number(req.params.id),
+        id,
         validacao.data,
       );
 
@@ -94,7 +129,13 @@ class ProdutoController {
     next: NextFunction,
   ) {
     try {
-      const produto = await produtoService.inativar(Number(req.params.id));
+      const id = parseProdutoId(req.params.id);
+      if (id === null) {
+        return res.status(400).json({
+          mensagem: "O ID deve ser um número inteiro positivo.",
+        });
+      }
+      const produto = await produtoService.inativar(id);
       return res.status(200).json(produto);
     } catch (error) {
       return next(error);
