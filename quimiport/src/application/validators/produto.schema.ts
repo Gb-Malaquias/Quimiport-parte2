@@ -1,28 +1,36 @@
 import { z } from "zod";
 
-// Dados aceitos
-export const criarProdutoSchema = z.object({
-  nome: z.string().trim().min(1, "O nome do produto é obrigatório"),
+// Dados aceitos no cadastro.
+// ALTERADO: .strict() rejeita campos não declarados, como "status".
+export const criarProdutoSchema = z
+  .object({
+    nome: z.string().trim().min(1, "O nome do produto é obrigatório"),
 
-  descricao: z.string().trim().min(1, "A descrição é obrigatória"),
+    descricao: z.string().trim().min(1, "A descrição é obrigatória"),
 
-  codigoOnu: z.string().trim().min(1, "O código ONU é obrigatório"),
+    codigoOnu: z.string().trim().min(1, "O código ONU é obrigatório"),
 
-  classeRisco: z.string().trim().min(1, "A classe de risco é obrigatória"),
+    classeRisco: z
+      .string()
+      .trim()
+      .min(1, "A classe de risco é obrigatória"),
 
-  grupoCompatibilidade: z
-    .string()
-    .trim()
-    .min(1, "O grupo de compatibilidade é obrigatório"),
-});
+    grupoCompatibilidade: z
+      .string()
+      .trim()
+      .min(1, "O grupo de compatibilidade é obrigatório"),
+  })
+  .strict();
 
-// Dados aceitos na atualização
-// O ID informado na URL
-export const atualizarProdutoSchema = criarProdutoSchema.partial().extend({
-  status: z.enum(["ATIVO", "INATIVO"]).optional(),
-});
-
-
+// Dados aceitos na atualização.
+// O ID continua sendo informado pela URL, não pelo corpo da requisição.
+// ALTERADO: .strict() também rejeita campos desconhecidos na atualização.
+export const atualizarProdutoSchema = criarProdutoSchema
+  .partial()
+  .extend({
+    status: z.enum(["ATIVO", "INATIVO"]).optional(),
+  })
+  .strict();
 
 export type CriarProdutoInput = z.infer<typeof criarProdutoSchema>;
 
