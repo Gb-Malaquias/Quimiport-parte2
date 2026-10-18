@@ -1,7 +1,6 @@
 import { z } from "zod";
 
-// Dados aceitos no cadastro.
-// ALTERADO: .strict() rejeita campos não declarados, como "status".
+// Dados aceitos.
 export const criarProdutoSchema = z
   .object({
     nome: z.string().trim().min(1, "O nome do produto é obrigatório"),
@@ -22,9 +21,7 @@ export const criarProdutoSchema = z
   })
   .strict();
 
-// Dados aceitos na atualização.
-// O ID continua sendo informado pela URL, não pelo corpo da requisição.
-// ALTERADO: .strict() também rejeita campos desconhecidos na atualização.
+// Dados da atualização.
 export const atualizarProdutoSchema = criarProdutoSchema
   .partial()
   .extend({
