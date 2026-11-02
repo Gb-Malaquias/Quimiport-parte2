@@ -357,7 +357,7 @@ Se necessário, consulte os logs:
 docker compose logs
 ```
 
-## Documentação da API (Swagger)
+## 📄 Documentação da API (Swagger)
 
 O QuimiPort possui documentação interativa desenvolvida com Swagger e OpenAPI 3.0, permitindo consultar os endpoints disponíveis, visualizar parâmetros, verificar respostas e testar requisições diretamente pela interface.
 
