@@ -1,3 +1,4 @@
+
 name: QuimiPort - CI
 
 on:
@@ -10,8 +11,7 @@ jobs:
   validate:
     name: Validar aplicação
     runs-on: ubuntu-latest
-    
-    #
+
     services:
       postgres:
         image: postgres:16-alpine
@@ -29,8 +29,8 @@ jobs:
 
     env:
       DATABASE_URL: postgresql://quimiport:quimiport_dev_password@localhost:5432/quimiport?schema=public
-     
-     defaults:
+
+    defaults:
       run:
         working-directory: ./quimiport
 
@@ -56,8 +56,7 @@ jobs:
         run: npm ci
 
       - name: Gerar Prisma Client
-        run: |
-          DATABASE_URL="postgresql://quimiport:quimiport_dev_password@localhost:5432/quimiport?schema=public" npx prisma generate
+        run: npx prisma generate
 
       - name: Executar migrations
         run: npx prisma migrate deploy
