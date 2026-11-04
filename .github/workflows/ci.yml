@@ -30,12 +30,8 @@ jobs:
     env:
       DATABASE_URL: postgresql://quimiport:quimiport_dev_password@localhost:5432/quimiport?schema=public
 
-    defaults:
-      run:
-        working-directory: ./quimiport
-
     steps:
-      - name: Baixar código
+      - name: Baixar código do repositório
         uses: actions/checkout@v4
 
       - name: Configurar Node.js
@@ -43,7 +39,6 @@ jobs:
         with:
           node-version: 22
           cache: npm
-          cache-dependency-path: quimiport/package-lock.json
 
       - name: Validar arquivos essenciais
         run: |
