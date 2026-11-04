@@ -1,0 +1,63 @@
+
+name: QuimiPort - CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validar aplicação
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: quimiport
+          POSTGRES_PASSWORD: quimiport_dev_password
+          POSTGRES_DB: quimiport
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U quimiport -d quimiport"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql://quimiport:quimiport_dev_password@localhost:5432/quimiport?schema=public
+
+    steps:
+      - name: Baixar código do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Validar arquivos essenciais
+        run: |
+          test -f package.json
+          test -f package-lock.json
+          test -f tsconfig.json
+          test -f prisma/schema.prisma
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Gerar Prisma Client
+        run: npx prisma generate
+
+      - name: Executar migrations
+        run: npx prisma migrate deploy
+
+      - name: Verificar build
+        run: npm run build
+
+      - name: Executar testes
+        run: npm test -- --runInBand
